@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+process.env.DEBUG += ' get-sauce-results';
+
+var join = require('path').join;
+var fs = require('fs');
+var mkdirp = require('mkdirp');
+var getResults = require('../');
+
+var dir = process.cwd();
+mkdirp.sync(dir);
+
+var user = process.argv[2];
+var key = process.argv[3];
+var job = process.argv[4];
+
+if (!(user && key && job)) {
+  console.log('USAGE:');
+  console.log('  get-sauce-results user key job');
+  process.exit(1);
+}
+
+getResults(user, key, job, writeFile, function (err) {
+  if (err) throw err;
+  console.log();
+  console.log();
+  console.log('DONE');
+})
+
+function writeFile(file, content, cb) {
+  var output = fs.createWriteStream(join(dir, file));
+  content.pipe(output);
+  var done = false;
+  content.on('error', err);
+  output.on('error', err);
+  output.on('close', function () {
+    if (done) return;
+    done = true;
+    cb();
+  });
+  function err(e) {
+    if (done) return;
+    done = true;
+    cb(e);
+  }
+}

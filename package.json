@@ -1,0 +1,24 @@
+{
+  "name": "get-sauce-results",
+  "version": "1.0.0",
+  "description": "Download debugging information about a sauce labs job",
+  "main": "index.js",
+  "dependencies": {
+    "debug": "~0.7.2",
+    "mkdirp": "~0.3.5",
+    "request": "~2.14.0"
+  },
+  "devDependencies": {},
+  "bin": {
+    "get-sauce-results": "./bin/get-sauce-results"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jepso-ci/get-sauce-results.git"
+  },
+  "author": "ForbesLindesay",
+  "license": "MIT"
+}
