@@ -1,5 +1,7 @@
 var debug = require('debug')('get-sauce-results');
-var request = require('request');
+var request = require('hyperquest');
+var concat = require('concat-stream');
+var url = require('url');
 
 exports = module.exports = downloadAssets;
 function downloadAssets(user, key, job, writeFile, callback) {
@@ -29,13 +31,20 @@ function downloadAssets(user, key, job, writeFile, callback) {
 
 exports.getAssets = getAssets;
 function getAssets(user, key, job, callback) {
-  var url = 'https://saucelabs.com/rest/v1/' + user + '/jobs/' + job + '/assets'
-  return request({
-    url: url,
-    auth: {user: user, pass: key}
-  }, function (err, res, body) {
+  var path = '/rest/v1/' + user + '/jobs/' + job + '/assets'
+  var done = false;
+  var req = request(format(path, user, key));
+  req.on('response', function (res) {
+    if (done) return;
+    if (res.statusCode != 200) {
+      done = true;
+      return callback(new Error('Server responded with status code ' + res.statusCode));
+    }
+  });
+  req.pipe(concat(function (err, body) {
+    if (done) return;
+    done = true;
     if (err) return callback(err);
-    if (res.statusCode != 200) return callback(new Error('Server responded with status code ' + res.statusCode));
     var res;
     try {
       res = JSON.parse(body.toString());
@@ -43,14 +52,20 @@ function getAssets(user, key, job, callback) {
       return callback(ex);
     }
     return callback(null, res);
-  });
+  }));
 }
 
 exports.getAsset = getAsset;
 function getAsset(user, key, job, asset) {
-  var url = 'https://saucelabs.com/rest/' + user + '/jobs/' + job + '/results/' + asset;
-  return request({
-    url: url,
-    auth: {user: user, pass: key}
+  var path = '/rest/' + user + '/jobs/' + job + '/results/' + asset;
+  return request(format(path, user, key));
+}
+
+function format(path, user, pass) {
+  return url.format({
+    protocol: 'https',
+    host: 'saucelabs.com',
+    pathname: path,
+    auth: user + ':' + pass
   });
 }
