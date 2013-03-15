@@ -1,6 +1,6 @@
 {
   "name": "get-sauce-results",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Download debugging information about a sauce labs job",
   "main": "index.js",
   "dependencies": {
