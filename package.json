@@ -6,7 +6,7 @@
   "dependencies": {
     "debug": "~0.7.2",
     "mkdirp": "~0.3.5",
-    "request": "~2.14.0"
+    "request": "~2.16"
   },
   "devDependencies": {},
   "bin": {
