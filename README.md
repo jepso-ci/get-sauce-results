@@ -1,5 +1,6 @@
 <img src="http://i.imgur.com/GoaISmM.png" align="right" />
 # get-sauce-results
+[![Dependency Status](https://gemnasium.com/jepso-ci/get-sauce-results.png)](https://gemnasium.com/jepso-ci/get-sauce-results)
 
   Download debugging information about a sauce labs job
 
