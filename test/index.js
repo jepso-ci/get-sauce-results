@@ -30,12 +30,20 @@ describe('getResults(user, key, job)', function () {
         function output(name) {
           sha.checkSync(__dirname + '/output/' + name, sha.getSync(__dirname + '/fixtures/output/' + name))
         }
+        function outputText(name) {
+          var expected = fs.readFileSync(__dirname + '/fixtures/output/' + name, 'utf8').replace(/\r/g, '')
+          var actual = fs.readFileSync(__dirname + '/output/' + name, 'utf8').replace(/\r/g, '')
+          if (actual !== expected) {
+            var err = new Error('Text equality check failed for ' + __dirname + '/output/' + name)
+            throw err
+          }
+        }
         output('0000screenshot.png')
         output('0001screenshot.png')
         output('0002screenshot.png')
         output('0003screenshot.png')
-        output('log.json')
-        output('selenium-server.log')
+        outputText('log.json')
+        outputText('selenium-server.log')
         output('video.flv')
       })
       .nodeify(done)
