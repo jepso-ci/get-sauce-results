@@ -1,0 +1,38 @@
+Jul 6, 2013 11:03:22 PM org.openqa.grid.selenium.GridLauncher main
+INFO: Launching a standalone server
+Setting system property webdriver.firefox.logfile to c:\log\firefox.log
+23:03:23.312 INFO - Writing debug logs to c:\log\selenium-server-interactive.log
+23:03:23.315 INFO - Java: Sun Microsystems Inc. 20.10-b01
+23:03:23.316 INFO - OS: Windows Server 2008 R2 6.1 x86
+23:03:23.335 INFO - v2.31.0, with Core v2.31.0. Built from revision 1bd294d
+23:03:23.660 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4443/wd/hub
+23:03:23.663 INFO - Version Jetty/5.1.x
+23:03:23.666 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+23:03:23.668 INFO - Started HttpContext[/selenium-server,/selenium-server]
+23:03:23.669 INFO - Started HttpContext[/,/]
+23:03:23.759 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@7ffe01
+23:03:23.759 INFO - Started HttpContext[/wd,/wd]
+23:03:23.764 INFO - Started SocketListener on 0.0.0.0:4443
+23:03:23.764 INFO - Started org.openqa.jetty.jetty.Server@1100d7a
+23:03:24.554 INFO - Executing: [new session: {javascriptEnabled=true, browserName=firefox, webdriver.remote.quietExceptions=true}] at URL: /session)
+23:03:28.327 INFO - Done: /session
+23:03:28.349 INFO - Executing: [execute script: window.moveTo(0,0);window.resizeTo(screen.width,screen.height);, []] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/execute)
+23:03:28.374 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/execute
+23:03:28.386 INFO - Executing: [maximise window] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/window/current/maximize)
+23:03:28.445 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/window/current/maximize
+23:03:28.472 INFO - Executing: [get window handles] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/window_handles)
+23:03:28.485 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/window_handles
+23:03:28.905 INFO - Executing: org.openqa.selenium.remote.server.handler.GetSessionCapabilities@1f08ed8 at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b)
+23:03:28.905 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b
+23:03:29.502 INFO - Executing: [get: https://jepso-ci.com/api/proxy/jepso-ci-examples/minimum/master/test.html] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/url)
+23:03:30.182 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/url
+23:03:30.933 INFO - Executing: [execute script: return window.testsPassed;, []] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/execute)
+23:03:30.950 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/execute
+23:03:31.667 INFO - Executing: [find elements: By.tagName: p] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/elements)
+23:03:31.744 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/elements
+23:03:32.178 INFO - Executing: [get text: 0 org.openqa.selenium.support.events.EventFiringWebDriver$EventFiringWebElement@bd48261d] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/element/0/text)
+23:03:32.206 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/element/0/text
+23:03:32.640 INFO - Executing: [get text: 1 org.openqa.selenium.support.events.EventFiringWebDriver$EventFiringWebElement@8f37def9] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/element/1/text)
+23:03:32.661 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/element/1/text
+23:03:33.064 INFO - Executing: [take screenshot] at URL: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/screenshot)
+23:03:33.135 INFO - Done: /session/c8dab223-a81b-4a9c-8bf1-dc3bc1545b6b/screenshot
