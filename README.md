@@ -1,8 +1,11 @@
 <img src="http://i.imgur.com/GoaISmM.png" align="right" />
 # get-sauce-results
-[![Dependency Status](https://gemnasium.com/jepso-ci/get-sauce-results.png)](https://gemnasium.com/jepso-ci/get-sauce-results)
 
   Download debugging information about a sauce labs job
+
+[![Build Status](https://travis-ci.org/jepso-ci/get-sauce-results.png?branch=master)](https://travis-ci.org/jepso-ci/get-sauce-results)
+[![Dependency Status](https://gemnasium.com/jepso-ci/get-sauce-results.png)](https://gemnasium.com/jepso-ci/get-sauce-results)
+[![NPM version](https://badge.fury.io/js/get-sauce-results.png)](http://badge.fury.io/js/get-sauce-results)
 
 ## Installation
 
