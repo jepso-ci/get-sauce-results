@@ -16,32 +16,57 @@
 
 ### Command Line
 
-  To download all of a jobs assets into the current directory simply run:
+To download all of a jobs assets into the current directory simply run:
 
-    get-sauce-results user key jobID
+```console
+$ get-sauce-results user key jobID
+```
+
+Example:
+
+```console
+$ get-sauce-results sauce-runner c71a5c75-7c28-483f-9053-56da13b40bc2 2f175cb6900a479a8ef45d13d2b14807
+log.json
+video.flv
+selenium-server.log
+0000screenshot.png
+0001screenshot.png
+0002screenshot.png
+0003screenshot.png
+```
 
 ### API
 
-  To download all the jobs assets:
+All streams are node 0.10 or higher style streams (using readable-stream for backwards compatibility).  They are also wrapped with the aditional [barrage](https://npmjs.org/package/barrage) API which provides `syphon`, `buffer` and `wait`.
 
-```javascript
-var getSauceResults = require('get-sauce-results');
+Basic Example:
 
-getSauceResults(user, key, jobID, write, function (err) {
-  if (err) throw err;
-  console.log('done');
-});
+```js
+var barrage = require('barrage')
+var fs = require('fs')
+var getResults = require('get-sauce-results')
 
-function write(fileName, fileContentStream, callback) {
-  var output = fs.createWriteStream(path.join(__dirname, 'output', fileName));
-
-  fileContentStream.pipe(output);
-
-  fileContentStream.on('error', cb);
-  output.on('error', cb);
-
-  output.on('close', function () {
-    cb();
-  });
+function download(user, key, job, destinationFolder) {
+  var source = getResults(user, key, job)
+  var dest = new barrage.Writable({objectMode: true})
+  dest._write = function (entry, _, callback) {
+    entry.read()
+         .syphon(barrage(fs.createWriteStream(path.join(destinationFolder, entry.path))))
+         .wait(callback)
+  }
+  source.syphon(dest)
+  return dest.wait(callback)
 }
 ```
+
+#### getSauceResults(user, key, job) => stream
+
+Returns a stream of objects, each with a `path` property which contains the file name of the asset and a `read` method, which returns a stream for the binary data of the file.
+
+#### getSauceResults.getAssets(user, key, job, callback(err, res))
+
+Call the callback with an object mapping names onto assets
+
+#### getSauceResults.getAsset(user, key, job, assetPath) => stream
+
+Return a binary stream for a given asset.

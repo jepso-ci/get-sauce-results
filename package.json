@@ -2,18 +2,20 @@
   "name": "get-sauce-results",
   "version": "1.0.1",
   "description": "Download debugging information about a sauce labs job",
-  "main": "index.js",
   "dependencies": {
-    "debug": "~0.7.2",
-    "mkdirp": "~0.3.5",
-    "request": "~2.16"
+    "barrage": "0.0.3",
+    "request": "~2.22.0"
   },
-  "devDependencies": {},
-  "bin": {
-    "get-sauce-results": "./bin/get-sauce-results"
+  "devDependencies": {
+    "linify": "~1.0.1",
+    "rimraf": "~2.2.0",
+    "replay": "~1.7.0",
+    "sha": "~1.2.0"
   },
+  "bin": "./bin/cli.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha -R spec",
+    "prepublish": "linify transform ./bin"
   },
   "repository": {
     "type": "git",

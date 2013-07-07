@@ -1,30 +1,46 @@
-var debug = require('debug')('get-sauce-results');
-var request = require('request');
+'use strict'
 
-exports = module.exports = downloadAssets;
-function downloadAssets(user, key, job, writeFile, callback) {
-  getAssets(user, key, job, function (err, res) {
-    if (err) return callback(err);
+var request = require('request')
+var barrage = require('barrage')
+var Readable = barrage.Readable
 
-    var remaining = 0;
-    Object.keys(res)
-      .forEach(function (id) {
-        var assets = typeof res[id] === 'string' ? [res[id]] : res[id];
-        assets.forEach(function (asset) {
-          remaining++;
-          debug('GET: ' + asset);
-          writeFile(asset, getAsset(user, key, job, asset), function (err) {
-            if (err) return callback(err);
-            debug('GOT: ' + asset);
-            if (0 === --remaining) done();
-          });
-        });
+exports = module.exports = downloadAssets
+function downloadAssets(user, key, job) {
+  var stream = new Readable({objectMode: true})
+  var reading = false
+  var assets = null
+  stream._read = function () {
+    if (reading) return
+    reading = true
+    if (!assets) {
+      getAssets(user, key, job, function (err, res) {
+        if (err) return stream.emit('error', err), stream.push(null)
+
+        var remaining = 0;
+        assets = Object.keys(res)
+          .map(function (id) {
+            return typeof res[id] === 'string' ? [res[id]] : res[id]
+          })
+          .reduce(function (acc, res) {
+            return acc.concat(res)
+          }, [])
+          .reverse()
+        reading = false
+        stream._read()
       });
-    if (remaining === 0) done();
-    function done() {
-      callback();
+    } else if (assets.length === 0) {
+      stream.push(null)
+    } else {
+      var asset = assets.pop()
+      var cont = stream.push({
+        path: asset,
+        read: function () { return getAsset(user, key, job, asset) }
+      })
+      reading = false
+      if (cont) stream._read()
     }
-  });
+  }
+  return stream
 }
 
 exports.getAssets = getAssets;
@@ -34,23 +50,23 @@ function getAssets(user, key, job, callback) {
     url: url,
     auth: {user: user, pass: key}
   }, function (err, res, body) {
-    if (err) return callback(err);
-    if (res.statusCode != 200) return callback(new Error('Server responded with status code ' + res.statusCode));
-    var res;
+    if (err) return callback(err)
+    if (res.statusCode != 200) return callback(new Error('Server responded with status code ' + res.statusCode))
+    var res
     try {
-      res = JSON.parse(body.toString());
+      res = JSON.parse(body.toString())
     } catch (ex) {
-      return callback(ex);
+      return callback(ex)
     }
-    return callback(null, res);
-  });
+    return callback(null, res)
+  })
 }
 
 exports.getAsset = getAsset;
 function getAsset(user, key, job, asset) {
-  var url = 'https://saucelabs.com/rest/' + user + '/jobs/' + job + '/results/' + asset;
-  return request({
+  var url = 'https://saucelabs.com/rest/' + user + '/jobs/' + job + '/results/' + asset
+  return barrage(request({
     url: url,
     auth: {user: user, pass: key}
-  });
+  }))
 }
