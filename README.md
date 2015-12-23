@@ -4,7 +4,7 @@
   Download debugging information about a sauce labs job
 
 [![Build Status](https://travis-ci.org/jepso-ci/get-sauce-results.png?branch=master)](https://travis-ci.org/jepso-ci/get-sauce-results)
-[![Dependency Status](https://david-dm.org/jepso-ci/get-sauce-results.png)](https://gemnasium.com/jepso-ci/get-sauce-results)
+[![Dependency Status](https://img.shields.io/david/jepso-ci/get-sauce-results.svg)](https://david-dm.org/jepso-ci/get-sauce-results)
 [![NPM version](https://img.shields.io/npm/v/get-sauce-results.svg)](https://www.npmjs.com/package/get-sauce-results)
 
 ## Installation
